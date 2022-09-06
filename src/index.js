@@ -15,7 +15,7 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route path="/client-maintenace" element={<ClientMaintenance />} />
+            <Route path="/client-maintenance" element={<ClientMaintenance />} />
             <Route path="/client-query" element={<ClientQuery />} />
             <Route path="/home" element={<Home />} />
             <Route path="*" element={<Error />} />

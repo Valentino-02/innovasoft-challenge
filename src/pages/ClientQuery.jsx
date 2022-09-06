@@ -1,8 +1,15 @@
 import React from 'react'
+import { Stack, Divider } from '@mui/material'
+
+import { CQData, CQHeader, CQSearcher } from '../components'
 
 const ClientQuery = () => {
   return (
-    <div>ClientQuery</div>
+    <Stack divider={<Divider flexItem />} spacing={2}>
+      <CQHeader />
+      <CQSearcher />
+      <CQData />
+    </Stack>
   )
 }
 

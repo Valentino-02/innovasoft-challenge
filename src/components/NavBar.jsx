@@ -7,7 +7,7 @@ import DrawerMenu from './DrawerMenu';
 
 const drawerWidth = 240;
 
-const NavBar = () => {
+const NavBar = ({ children, mainPage }) => {
   const [drawerOpen, setDrawerOpen ] = useState(false)
 
   const handleLogOut = () => {
@@ -15,7 +15,7 @@ const NavBar = () => {
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ display: 'flex'}}>
       <AppBar 
         color="primary" 
         position="fixed"
@@ -24,40 +24,46 @@ const NavBar = () => {
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          edge="start"
-          onClick={() => setDrawerOpen(!drawerOpen)}
-          sx={{ display: { xs: 'block', sm: 'none' } }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography 
-          variant="h6"
-          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-        >
-          client-data-manager
-        </Typography>
-        <Typography 
-          variant="h6"
-          sx={{ display: { xs: 'none', sm: 'block' } }}
-        >
-          User-Name
-        </Typography>
-        <IconButton
-          color="inherit"
-          edge="end"
-          onClick={handleLogOut}
-          size='large'
-          sx={{ ml: 'auto' }}
-        >
-          <LogoutIcon />
-        </IconButton>
-      </Toolbar>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            edge="start"
+            onClick={() => setDrawerOpen(!drawerOpen)}
+            sx={{ display: { xs: 'block', sm: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography 
+            variant="h6"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+            client-data-manager
+          </Typography>
+          <Typography 
+            variant="h6"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >
+            User-Name
+          </Typography>
+          <IconButton
+            color="inherit"
+            edge="end"
+            onClick={handleLogOut}
+            size='large'
+            sx={{ ml: 'auto' }}
+          >
+            <LogoutIcon />
+          </IconButton>
+        </Toolbar>
       </AppBar>
+
       <Box sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
         <DrawerMenu open={drawerOpen} drawerWidth={drawerWidth} parentSetter={setDrawerOpen}/>
+      </Box>
+
+      <Box sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>  
+        <Toolbar />
+        {children}
       </Box>
 
     </Box>

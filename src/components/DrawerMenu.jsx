@@ -1,13 +1,37 @@
 import React from 'react'
-import { Drawer, Toolbar, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, Box, IconButton } from '@mui/material'
+import { Drawer, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material'
 import HomeIcon from '@mui/icons-material/Home';
-import MailIcon from '@mui/icons-material/Mail';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import { Stack } from '@mui/system';
 
 const drawer = (
-  <div>
+  <>
+    <Stack alignItems='center' sx={{ mt:2, mb: 2 }}>
+    <AccountCircleIcon sx={{ fontSize: 150 }} />
+    <Typography variant='h4'>User Name</Typography>
+    </Stack>
+    <Divider />
 
-  </div>
+    <List>
+      <ListItem disablePadding>
+        <ListItemButton>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary='Home' />
+        </ListItemButton>
+      </ListItem>
+      <ListItem disablePadding>
+        <ListItemButton>
+          <ListItemIcon>
+            <PersonSearchIcon />
+          </ListItemIcon>
+          <ListItemText primary='Clients Query' />
+        </ListItemButton>
+      </ListItem>
+    </List>
+  </>
 );
 
 const DrawerMenu = ({ open, drawerWidth, parentSetter }) => {
