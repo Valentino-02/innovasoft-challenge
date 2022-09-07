@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
-import { Box, Paper, Avatar, Stack, TextField, Typography, Button, Link } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { Box, Paper, Avatar, Stack, TextField, Typography, Button, Alert, Snackbar } from '@mui/material'
 import PersonIcon from '@mui/icons-material/Person';
 import { styled } from '@mui/material/styles';
+
+import { registerUser } from '../services/auth';
 
 const StyledPaper = styled(Paper, {})({
   padding: 20,
@@ -17,9 +20,13 @@ const Register = () => {
   const [ passwordFailedOnce, setPasswordFailedOnce ] = useState(false)
   const [ mailFailed, setMailFailed ] = useState(false)
   const [ mailFailedOnce, setMailFailedOnce ] = useState(false)
+  const [ openAlert, setOpenAlert ] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    setOpenAlert(!openAlert)
+
     let data = new FormData(e.currentTarget)
     let passwordDidFail = !checkPassword(data.get('password'))
     let mailDidFail = !checkMail(data.get('mail'))
@@ -30,16 +37,18 @@ const Register = () => {
     setMailFailedOnce(mailDidFail)
 
     if ( passwordDidFail || mailDidFail) {
-      console.log('fail')
       return
     }
-    console.log({
-      user: data.get('user'),
-      password: data.get('password'),
-      isN: checkPassword(data.get('password')),
-      isM: checkMail(data.get('mail'))
-    });
+
+    let userData = {
+      "username": data.get('user'),
+      "email": data.get('mail'),
+      "password": data.get('password')
+    }
+
+    //registerUser(userData)
   }
+
   const handleMailChange = (e) => {
     setMailFailed(!checkMail(e.target.value))
   }
@@ -109,11 +118,21 @@ const Register = () => {
           >
             Register
           </Button>
-          <Link href="/login" variant="body2">
-            {"Already have an account? Login"}
+          <Link to="/login">
+            Already have an account? Login
           </Link>
         </Box>
       </Stack>
+      
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={200}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+      <Alert severity="success" color="info" onClose={() => setOpenAlert(false)}>
+        Register was a Succes!
+      </Alert>
+      </Snackbar>
     </StyledPaper>
   )
 }

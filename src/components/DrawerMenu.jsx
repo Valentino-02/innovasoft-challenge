@@ -1,21 +1,29 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import { Drawer, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material'
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { Stack } from '@mui/system';
 
-const drawer = (
+import { useStateContext } from '../context';
+
+const DrawerColumn = () => {  
+  const navigate = useNavigate()
+
+  const { userInfo } = useStateContext()
+
+  return (
   <>
-    <Stack alignItems='center' sx={{ mt:2, mb: 2 }}>
+    <Stack alignItems='center' justifyContent='center' sx={{ mt:2, mb: 2 }}>
     <AccountCircleIcon sx={{ fontSize: 150 }} />
-    <Typography variant='h4'>User Name</Typography>
+    <Typography variant='h4'>{userInfo.username}</Typography>
     </Stack>
     <Divider />
 
     <List>
       <ListItem disablePadding>
-        <ListItemButton>
+        <ListItemButton onClick={() => navigate("/home")}>
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
@@ -23,7 +31,7 @@ const drawer = (
         </ListItemButton>
       </ListItem>
       <ListItem disablePadding>
-        <ListItemButton>
+        <ListItemButton onClick={() => navigate("/client-query")}>
           <ListItemIcon>
             <PersonSearchIcon />
           </ListItemIcon>
@@ -31,8 +39,9 @@ const drawer = (
         </ListItemButton>
       </ListItem>
     </List>
-  </>
-);
+  </> 
+  )
+}
 
 const DrawerMenu = ({ open, drawerWidth, parentSetter }) => {
   return (
@@ -47,7 +56,7 @@ const DrawerMenu = ({ open, drawerWidth, parentSetter }) => {
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
         }}
       >
-        {drawer}
+        <DrawerColumn />
       </Drawer>
 
       <Drawer
@@ -58,7 +67,7 @@ const DrawerMenu = ({ open, drawerWidth, parentSetter }) => {
         }}
         open
       >
-        {drawer}
+        <DrawerColumn />
       </Drawer>
     </>
   )

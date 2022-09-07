@@ -1,16 +1,24 @@
 import React from 'react';
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 
 import { NavBar } from './components'
+import { useStateContext } from './context'
 
 function App() {
-  return (
-    <div>
-      <NavBar>
-        <Outlet />  
-      </NavBar>
-    </div>
-  );
+  const { auth } = useStateContext()
+
+  if (!auth) {
+    return <Navigate replace to="/login" />
+  } else {
+    return (
+      <div>
+        <NavBar>
+          <Outlet />  
+        </NavBar>
+      </div>
+    );
+  }
+
 }
 
 export default App;

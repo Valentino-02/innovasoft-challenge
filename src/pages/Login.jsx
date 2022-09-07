@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
-import { Box, Paper, Avatar, Stack, TextField, Typography, FormControlLabel, Checkbox, Button, Link, InputAdornment, IconButton } from '@mui/material'
+import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { Box, Paper, Avatar, Stack, TextField, Typography, FormControlLabel, Checkbox, Button, InputAdornment, IconButton } from '@mui/material'
 import LoginIcon from '@mui/icons-material/Login';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { styled } from '@mui/material/styles';
+
+import { useStateContext } from '../context'
+import { loginUser } from '../services/auth';
 
 const StyledPaper = styled(Paper, {})({
   padding: 20,
@@ -13,15 +18,28 @@ const StyledPaper = styled(Paper, {})({
 })
 
 const Login = () => {
+  const navigate = useNavigate()
+
   const [ showPassword, setShowPassword ] = useState(false)
+
+  const { setUserInfo, setAuth } = useStateContext()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const data = new FormData(e.currentTarget)
-    console.log({
-      user: data.get('user'),
-      password: data.get('password'),
-    });
+
+    let userData = {
+      "username": data.get('user'),
+      "password": data.get('password')
+    }
+
+    //loginUser(userData)
+
+    //setUserInfo()
+
+    setAuth(true)
+
+    navigate('/home')
   }
 
   return (
@@ -78,8 +96,8 @@ const Login = () => {
           >
             Login
           </Button>
-          <Link href="/register" variant="body2">
-            {"Don't have an account? Register"}
+          <Link to="/register">
+            Don't have an account? Register
           </Link>
         </Box>
       </Stack>

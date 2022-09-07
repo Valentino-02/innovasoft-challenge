@@ -4,14 +4,17 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 import DrawerMenu from './DrawerMenu';
+import { useStateContext } from '../context';
 
 const drawerWidth = 240;
 
 const NavBar = ({ children, mainPage }) => {
   const [drawerOpen, setDrawerOpen ] = useState(false)
 
+  const { userInfo, setAuth } = useStateContext() 
+
   const handleLogOut = () => {
-    
+    setAuth(false)
   }
 
   return (
@@ -43,7 +46,7 @@ const NavBar = ({ children, mainPage }) => {
             variant="h6"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            User-Name
+            {userInfo.username}
           </Typography>
           <IconButton
             color="inherit"

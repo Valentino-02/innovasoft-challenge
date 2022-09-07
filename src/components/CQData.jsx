@@ -1,18 +1,25 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import { Box, IconButton, ButtonGroup, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const Buttons = (
-  <ButtonGroup>
-    <IconButton>
-      <EditIcon />
-    </IconButton>
-    <IconButton>
-      <DeleteIcon />
-    </IconButton>
-  </ButtonGroup>
-)
+const Buttons = () =>{
+  const navigate = useNavigate()
+
+  return(
+    <ButtonGroup>
+      <IconButton onClick={() => navigate('/client-maintenance')}>
+        <EditIcon />
+      </IconButton>
+      <IconButton>
+        <DeleteIcon />
+      </IconButton>
+    </ButtonGroup>
+  )
+} 
+
+
 
 const data=[
   {identificacion: 1, nombre: 'juan'},
@@ -53,7 +60,7 @@ const CQData = () => {
                 {row.identification}
               </TableCell>
               <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{Buttons}</TableCell>
+              <TableCell align="right"><Buttons /></TableCell>
             </TableRow>
           ))}
         </TableBody>
