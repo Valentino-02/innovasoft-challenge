@@ -1,5 +1,5 @@
-import React from 'react'
-import { Grid, Box, IconButton, TextField } from '@mui/material'
+import React, { useState } from 'react'
+import { Grid, Box, IconButton, TextField, Snackbar, Alert } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 
 import { useStateContext } from '../context'
@@ -7,6 +7,7 @@ import { getListClients } from '../services/client';
 
 const CQSearcher = () => {
   const { setClients } = useStateContext()
+  const [ errorAlert, setErrorAlert ] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -17,7 +18,11 @@ const CQSearcher = () => {
     }
     getListClients(clientData)
       .then((res) =>{
-        setClients(res.data)
+        let clients = res.data
+        setClients(clients)
+        if (clients.length === 0) {
+          setErrorAlert(true)
+        }
       })
   }
 
@@ -54,6 +59,16 @@ const CQSearcher = () => {
           </IconButton>
         </Grid>
     </Grid>
+
+    <Snackbar
+      open={errorAlert}
+      autoHideDuration={200}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+    >
+    <Alert severity="info" color="info" onClose={() => setErrorAlert(false)}>
+      client not found
+    </Alert>
+    </Snackbar>
   </Box>
   )
 }

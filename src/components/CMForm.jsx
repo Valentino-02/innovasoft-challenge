@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Grid, Box, TextField, MenuItem } from '@mui/material'
 
 import { useStateContext } from '../context'
@@ -6,7 +6,13 @@ import { useStateContext } from '../context'
 const CMForm = ({ interests }) => {
   const [ gender, setGender ] = useState('')
   const [ interest, setInterest ] = useState('')
-  const { clientData } = useStateContext()
+  const { clientData, setClientData } = useStateContext()
+
+  useEffect(() => {
+    return () => {
+      setClientData({})
+    }
+  }, [])
 
   const handleInterestChange = (e) => {
     setInterest(e.target.value);
