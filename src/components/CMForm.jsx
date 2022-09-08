@@ -1,70 +1,124 @@
-import React from 'react'
-import { Grid, Box, IconButton, TextField, MenuItem } from '@mui/material'
+import React, { useState } from 'react'
+import { Grid, Box, TextField, MenuItem } from '@mui/material'
 
-const textFields = [
-  <TextField             
-    id='identification' 
-    label='Identification'
-    name='identification' 
-    variant='outlined' 
-    required
-    fullWidth
-  />,
-  <TextField             
-    id='firstName' 
-    label='First Name'
-    name='firstName' 
-    variant='outlined' 
-    required
-    fullWidth
-  />,
-  <TextField             
-    id='lastName' 
-    label='Last Name'
-    name='lastName' 
-    variant='outlined' 
-    required
-    fullWidth
-  />,
-  <TextField  
-    select           
-    id='genre' 
-    label='Genre'
-    name='genre' 
-    variant='outlined' 
-    required
-    fullWidth
-  >
-    <MenuItem value='masculine'>Masculine</MenuItem>
-    <MenuItem value='femenine'>Femenine</MenuItem>
-  </TextField>,
-  <TextField             
-    id='cellphone' 
-    label='Cellphone'
-    name='cellphone' 
-    variant='outlined' 
-    required
-    fullWidth
-  />,
-  <TextField             
-    id='otherphone' 
-    label='Other Phone'
-    name='otherphone' 
-    variant='outlined' 
-    required
-    fullWidth
-  />,
+import { useStateContext } from '../context'
 
+const CMForm = ({ interests }) => {
+  const [ gender, setGender ] = useState('')
+  const [ interest, setInterest ] = useState('')
+  const { clientData } = useStateContext()
 
-]
+  const handleInterestChange = (e) => {
+    setInterest(e.target.value);
+  };
+  const handleGenderChange = (e) => {
+    setGender(e.target.value);
+  };
 
-const CMForm = () => {
-  const handleSubmit = () => {
-
-  }
+  const textFields = [
+    <TextField             
+      id='identification' 
+      label='Identification'
+      name='identification' 
+      variant='outlined' 
+      required
+      fullWidth
+      defaultValue={clientData.identificacion}
+    />,
+    <TextField             
+      id='firstName' 
+      label='First Name'
+      name='firstName' 
+      variant='outlined' 
+      required
+      fullWidth
+      defaultValue={clientData.nombre}
+    />,
+    <TextField             
+      id='lastName' 
+      label='Last Name'
+      name='lastName' 
+      variant='outlined' 
+      required
+      fullWidth
+      defaultValue={clientData.apellidos}
+    />,
+    <TextField  
+      select           
+      id='gender' 
+      label='Gender'
+      name='gender' 
+      variant='outlined' 
+      value={gender}
+      onChange={handleGenderChange}
+      required
+      fullWidth
+      defaultValue={clientData.sexo}
+    >
+      <MenuItem value='M'>Male</MenuItem>
+      <MenuItem value='F'>Female</MenuItem>
+    </TextField>,
+    <TextField             
+      id='cellphone' 
+      label='Cellphone'
+      name='cellphone' 
+      variant='outlined' 
+      required
+      fullWidth
+      defaultValue={clientData.telefonoCelular}
+    />,
+    <TextField             
+      id='otherphone' 
+      label='Other Phone'
+      name='otherPhone' 
+      variant='outlined' 
+      required
+      fullWidth
+      defaultValue={clientData.otroTelefono}
+    />,
+    <TextField
+      id="birthdate"
+      label="Birth Date"
+      name='birthdate' 
+      type="date"
+      required
+      fullWidth
+      InputLabelProps={{
+        shrink: true,
+      }}
+      defaultValue={clientData.FNacimiento}
+    />,
+    <TextField
+      id="affiliationDate"
+      label="Affiliation Date"
+      name='affiliationDate' 
+      type="date"
+      required
+      fullWidth
+      InputLabelProps={{
+        shrink: true,
+      }}
+      defaultValue={clientData.FAfiliacion}
+    />,
+    <TextField  
+      select           
+      id='interest' 
+      label='Interest'
+      name='interest' 
+      variant='outlined' 
+      value={interest}
+      onChange={handleInterestChange}
+      required
+      fullWidth
+    >
+      {interests?.map((item) =>(
+        <MenuItem key={item.id} value={item.id}>{item.descripcion}</MenuItem>
+      ))}
+    </TextField>,
+  ]
 
   return (
-    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+    <Box sx={{ mt: 1 }}>
       <Grid 
         container 
         spacing={{ xs: 2, md: 3 }}
@@ -83,6 +137,7 @@ const CMForm = () => {
             variant='outlined' 
             required
             fullWidth
+            defaultValue={clientData.direccion}
           />
         </Grid>
         <Grid item xs={12}>
@@ -91,8 +146,8 @@ const CMForm = () => {
             label='Review'
             name='review' 
             variant='outlined' 
-            required
             fullWidth
+            defaultValue={clientData.resenaPersonal}
           />
         </Grid>
       </Grid>

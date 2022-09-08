@@ -1,15 +1,21 @@
 import { clientsAxios } from '.'
 
-export const getListClients = async (userId) => {
-  return await clientsAxios.post('/Listado', userData)
+export const getListClients = async (clientData) => {
+  let reqBody = clientData
+  reqBody.usuarioId = localStorage.getItem('userid')
+  return await clientsAxios.post('/Listado', reqBody)
 }
 
-export const createClient = async (clientData, userId) => {
-  return await clientsAxios.post('/Crear', userData)
+export const createClient = async (clientData) => {
+  let reqBody = clientData
+  reqBody.usuarioId = localStorage.getItem('userid')
+  return await clientsAxios.post('/Crear', reqBody)
 }
 
-export const updateClient = async (clientData, userId) => {
-  return await clientsAxios.post('/Actualizar', userData)
+export const updateClient = async (clientData) => {
+  let reqBody = clientData
+  reqBody.usuarioId = localStorage.getItem('userid')
+  return await clientsAxios.post('/Actualizar', reqBody)
 }
 
 export const getClientInfo = async (clientId) => {

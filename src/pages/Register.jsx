@@ -1,16 +1,11 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Box, Paper, Avatar, Stack, TextField, Typography, Button, Alert, Snackbar } from '@mui/material'
+import { Box, Avatar, Stack, TextField, Typography, Button, Alert, Snackbar } from '@mui/material'
 import PersonIcon from '@mui/icons-material/Person';
-import { styled } from '@mui/material/styles';
 
 import { registerUser } from '../services/auth';
+import { StyledPaper } from '../utils/styledComponents'
 
-const StyledPaper = styled(Paper, {})({
-  padding: 20,
-  width: 280,
-  margin: "20px auto"
-})
 
 const mailWarning = 'please enter a valid mail'
 const passwordWarning = 'password should be between 8 and 20 characters, and have at least a number, a capital letter and a lower case letter'
@@ -25,7 +20,6 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
     let data = new FormData(e.currentTarget)
     let passwordDidFail = !checkPassword(data.get('password'))
     let mailDidFail = !checkMail(data.get('mail'))

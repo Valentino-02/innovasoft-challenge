@@ -1,5 +1,5 @@
 import { interestsAxios } from '.'
 
-export const getInterests = async (clientId) => {
-  return await clientsAxios.get(`/Listado`)
+export const getListInterests = async () => {
+  return await interestsAxios.get(`/Listado`)
 }

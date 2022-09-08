@@ -16,8 +16,10 @@ const NavBar = ({ children, mainPage }) => {
   const { userInfo } = useStateContext() 
 
   const handleLogOut = () => {
-    localStorage.removeItem('auth')
     localStorage.removeItem('loginToken')
+    localStorage.removeItem('username')
+    localStorage.removeItem('userid')
+    localStorage.removeItem('auth')
     navigate('/login')
   }
 

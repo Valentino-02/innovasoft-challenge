@@ -3,20 +3,25 @@ import React, { createContext, useContext, useState } from 'react';
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
-  const  [userInfo, setUserInfo ] = useState({
-    "username": 'template username',
-    "userid": '',
-    "token": ''
+  const [ userInfo, setUserInfo ] = useState({
+    "username": '',
+    "id": '',
   })
-  const [auth, setAuth ] = useState(false)
+  const [ interests, setInterests ] = useState([])
+  const [ clients, setClients ] = useState([])
+  const [ clientData, setClientData ] = useState({})
 
   return (
     <Context.Provider
       value={{
         userInfo,
         setUserInfo,
-        auth,
-        setAuth,
+        interests,
+        setInterests,
+        clients,
+        setClients,
+        clientData,
+        setClientData
       }}
     >
       {children}

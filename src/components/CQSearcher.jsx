@@ -2,9 +2,23 @@ import React from 'react'
 import { Grid, Box, IconButton, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 
-const CQSearcher = () => {
-  const handleSubmit = () => {
+import { useStateContext } from '../context'
+import { getListClients } from '../services/client';
 
+const CQSearcher = () => {
+  const { setClients } = useStateContext()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    let clientData = {
+      identificacion: formData.get('identification'),
+      nombre: formData.get('name')
+    }
+    getListClients(clientData)
+      .then((res) =>{
+        setClients(res.data)
+      })
   }
 
   return (
@@ -35,7 +49,7 @@ const CQSearcher = () => {
           />
         </Grid>
         <Grid item sm={1}>
-          <IconButton>
+          <IconButton type="submit">
             <SearchIcon />
           </IconButton>
         </Grid>

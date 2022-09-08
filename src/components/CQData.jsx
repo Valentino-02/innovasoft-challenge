@@ -4,40 +4,39 @@ import { Box, IconButton, ButtonGroup, Paper, Table, TableBody, TableCell, Table
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const Buttons = () =>{
+import { useStateContext } from '../context'
+import { deleteClient, getClientInfo } from '../services/client';
+
+const Buttons = ({ clientId }) =>{
   const navigate = useNavigate()
+  const { setClientData, clientData } = useStateContext()
+
+  const handleEditClick = () => {
+    getClientInfo(clientId).then((res) => {
+      setClientData(res.data)
+      console.log(clientData)
+      navigate('/client-maintenance')
+    })
+  }
+
+  const handleDeleteClick = () => {
+    deleteClient(clientId).then((res) => console.log(res))
+  }
 
   return(
     <ButtonGroup>
-      <IconButton onClick={() => navigate('/client-maintenance')}>
+      <IconButton onClick={handleEditClick}>
         <EditIcon />
       </IconButton>
       <IconButton>
-        <DeleteIcon />
+        <DeleteIcon onClick={handleDeleteClick}/>
       </IconButton>
     </ButtonGroup>
   )
 } 
 
-
-
-const data=[
-  {identificacion: 1, nombre: 'juan'},
-  {identificacion: 2, nombre: 'pedro'},
-  {identificacion: 3, nombre: 'jua'},
-  {identificacion: 4, nombre: 'juana'},
-  {identificacion: 5, nombre: 'juancito'},
-  {identificacion: 6, nombre: 'juanPedro'},
-  {identificacion: 7, nombre: 'juanjuan'},
-]
-
 const CQData = () => {
-
-  const rows = data.map((row) => ({
-    identification: row.identificacion,
-    name: row.nombre,
-
-  }))
+  const { clients } = useStateContext()
 
   return (
     <Box>
@@ -51,16 +50,16 @@ const CQData = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {clients?.map((client) => (
             <TableRow
-              key={row.identification}
+              key={client.identificacion}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell scope="row">
-                {row.identification}
+                {client.identificacion}
               </TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right"><Buttons /></TableCell>
+              <TableCell align="right">{client.nombre + ' ' + client.apellidos}</TableCell>
+              <TableCell align="right"><Buttons clientId={client.id} /></TableCell>
             </TableRow>
           ))}
         </TableBody>
