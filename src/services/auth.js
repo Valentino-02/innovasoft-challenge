@@ -1,29 +1,11 @@
-import axios from "axios";
-
-import { API_URL } from ".";
+import { authAxios } from '.'
 
 export const registerUser = async (userData) => {
-  try {
-    const res = await axios({
-      url: `${API_URL}/api/Authenticate/register`,
-      method: 'POST',
-      data: userData,
-    })
-    return res
-  } catch(err) {
-    console.log(err)
-  }
+  return await authAxios.post('/register', userData)
 }
 
 export const loginUser = async (userData) => {
-  try {
-    const res = await axios({
-      url: `${API_URL}/api/Authenticate/login`,
-      method: 'POST',
-      data: userData,
-    })
-    return res
-  } catch(err) {
-    console.log(err)
-  }
+  return await authAxios.post('/login', userData)
 }
+
+

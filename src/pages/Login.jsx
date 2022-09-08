@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { Box, Paper, Avatar, Stack, TextField, Typography, FormControlLabel, Checkbox, Button, InputAdornment, IconButton } from '@mui/material'
+import { Box, Paper, Avatar, Stack, TextField, Typography, FormControlLabel, Checkbox, Button, InputAdornment, IconButton, Snackbar, Alert } from '@mui/material'
 import LoginIcon from '@mui/icons-material/Login';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -9,6 +9,7 @@ import { styled } from '@mui/material/styles';
 
 import { useStateContext } from '../context'
 import { loginUser } from '../services/auth';
+import { TroubleshootTwoTone } from '@mui/icons-material';
 
 const StyledPaper = styled(Paper, {})({
   padding: 20,
@@ -21,8 +22,9 @@ const Login = () => {
   const navigate = useNavigate()
 
   const [ showPassword, setShowPassword ] = useState(false)
+  const [ failAlert, setFailAlert ] = useState(false)
 
-  const { setUserInfo, setAuth } = useStateContext()
+  const { userInfo, setUserInfo, setAuth } = useStateContext()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -33,13 +35,25 @@ const Login = () => {
       "password": data.get('password')
     }
 
-    //loginUser(userData)
-
-    //setUserInfo()
-
-    setAuth(true)
-
-    navigate('/home')
+    loginUser(userData)
+      .then((res) => {
+        let newUserInfo = {
+          "username": res.data.username,
+          "userid": res.data.userid,
+          "token": res.data.token
+        }
+        setUserInfo({
+          ...userInfo,
+          ...newUserInfo
+        })
+        localStorage.setItem('loginToken', res.data.token)
+        localStorage.setItem('auth', true)
+        setAuth(true)
+        navigate('/home')
+      })
+      .catch((err) => {
+        setFailAlert(true)
+      })
   }
 
   return (
@@ -101,6 +115,16 @@ const Login = () => {
           </Link>
         </Box>
       </Stack>
+
+      <Snackbar
+        open={failAlert}
+        autoHideDuration={200}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert severity="error" color="error" onClose={() => setFailAlert(false)}>
+          Wrong Password 
+        </Alert>
+      </Snackbar>
     </StyledPaper>
   )
 }

@@ -1,15 +1,20 @@
-import React from 'react';
-import { Outlet, Navigate } from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import { Outlet, useNavigate } from "react-router-dom";
 
 import { NavBar } from './components'
 import { useStateContext } from './context'
 
 function App() {
-  const { auth } = useStateContext()
+  const navigate = useNavigate()
 
-  if (!auth) {
-    return <Navigate replace to="/login" />
-  } else {
+  useEffect(() => {
+    let isAuth = localStorage.getItem('auth')
+
+    if (isAuth !== 'true') {
+      navigate('/login')
+    } 
+  }, [])
+
     return (
       <div>
         <NavBar>
@@ -17,8 +22,6 @@ function App() {
         </NavBar>
       </div>
     );
-  }
-
 }
 
 export default App;

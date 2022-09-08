@@ -1,8 +1,11 @@
 {
   "name": "desafio-innovasoft",
   "version": "0.1.0",
+  "homepage": "https://Valentino-02.github.io/innovasoft-challenge",
   "private": true,
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build"
   },
@@ -22,7 +25,8 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "eslint": "^8.23.0"
+    "eslint": "^8.23.0",
+    "gh-pages": "^4.0.0"
   },
   "eslintConfig": {
     "extends": [

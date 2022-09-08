@@ -20,12 +20,11 @@ const Register = () => {
   const [ passwordFailedOnce, setPasswordFailedOnce ] = useState(false)
   const [ mailFailed, setMailFailed ] = useState(false)
   const [ mailFailedOnce, setMailFailedOnce ] = useState(false)
-  const [ openAlert, setOpenAlert ] = useState(false)
+  const [ succesAlert, setSuccesAlert ] = useState(false)
+  const [ failAlert, setFailAlert ] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    setOpenAlert(!openAlert)
 
     let data = new FormData(e.currentTarget)
     let passwordDidFail = !checkPassword(data.get('password'))
@@ -46,7 +45,9 @@ const Register = () => {
       "password": data.get('password')
     }
 
-    //registerUser(userData)
+    registerUser(userData)
+      .then((res) => setSuccesAlert(true))
+      .catch((err) => setFailAlert(true))
   }
 
   const handleMailChange = (e) => {
@@ -125,12 +126,21 @@ const Register = () => {
       </Stack>
       
       <Snackbar
-        open={openAlert}
+        open={succesAlert}
         autoHideDuration={200}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-      <Alert severity="success" color="info" onClose={() => setOpenAlert(false)}>
-        Register was a Succes!
+      <Alert severity="success" color="success" onClose={() => setSuccesAlert(false)}>
+        Register was a Success!
+      </Alert>
+      </Snackbar>
+      <Snackbar
+        open={failAlert}
+        autoHideDuration={200}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+      <Alert severity="error" color="error" onClose={() => setFailAlert(false)}>
+        There is already a User with the same name
       </Alert>
       </Snackbar>
     </StyledPaper>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Box, IconButton } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -9,12 +10,15 @@ import { useStateContext } from '../context';
 const drawerWidth = 240;
 
 const NavBar = ({ children, mainPage }) => {
+  const navigate = useNavigate()
   const [drawerOpen, setDrawerOpen ] = useState(false)
 
-  const { userInfo, setAuth } = useStateContext() 
+  const { userInfo } = useStateContext() 
 
   const handleLogOut = () => {
-    setAuth(false)
+    localStorage.removeItem('auth')
+    localStorage.removeItem('loginToken')
+    navigate('/login')
   }
 
   return (
