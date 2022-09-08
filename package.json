@@ -1,7 +1,6 @@
 {
   "name": "desafio-innovasoft",
   "version": "0.1.0",
-  "homepage": "https://Valentino-02.github.io/innovasoft-challenge",
   "private": true,
   "scripts": {
     "predeploy": "npm run build",
