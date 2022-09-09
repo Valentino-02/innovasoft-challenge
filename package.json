@@ -1,11 +1,8 @@
 {
   "name": "desafio-innovasoft",
   "version": "0.1.0",
-  "homepage": "https://Valentino-02.github.io/innovasoft-challenge",
   "private": true,
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build"
   },
@@ -13,6 +10,7 @@
     "@date-io/date-fns": "^2.15.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@heroku/buildpack-registry": "^1.0.1",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.3",
     "@mui/x-date-pickers": "^5.0.0",
